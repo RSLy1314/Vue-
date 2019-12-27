@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MVVM</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{name}}</p>
+        <p>{{lover}}</p>
+        <p r-text='star'></p>
+        <input r-model='name'>
+        <button @click='change'>{{star}}</button>
+    </div>
+</body>
+</html>
+<script src="./mvvm.js"></script>
+<script src="./complier.js"></script>
+<script>
+    /* 
+        vue2.x作为一套渐进式，数据驱动视图，低耦合、模块化、自下向上的增量式开发设计、只关注视图层的高效率流行框架的原理是什么？
+        运用的就是数据的劫持、结合发布订阅者的JS设计模式实现数据的监听、收集依赖等技巧来完成，通过object.defineProporty的set\get属性截取数据
+        遍历宿主DOM的节点类型、转嫁到DocumentFragment片段中后追加至宿主中、通过虚拟DOOM、diff算法来做最小的比对更新方式来操作更新DOM树。
+        
+    */
+    const app = new Mvvm({
+        el: '#app',
+        data: {
+            name: 'LY',
+            lover: 'RS',
+            star: '❤❤❤',
+            date: {
+                loveDate: '2018-09-26'
+            }
+        },
+        created() {
+            console.log('created钩子函数');
+            setTimeout(() => {
+                this.name = 'RS',
+                this.lover = 'LY'
+            }, 2000);
+        },
+        methods: {
+            change() {
+                this.star = '520❤1314'
+            }
+        }
+    })
+    // app.$data.name = 'ddd'
+</script>
